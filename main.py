@@ -15,7 +15,7 @@ SERVER_PORT = 5600          # QGC가 비디오를 수신할 포트
 
 # GStreamer 송신 파이프라인 설정
 pipeline = Gst.parse_launch(
-    f"avfvideosrc ! videoconvert ! x264enc tune=zerolatency bitrate=500 speed-preset=superfast "
+    f"avfvideosrc device-index=1 ! videoconvert ! x264enc tune=zerolatency bitrate=500 speed-preset=superfast "
     f"! rtph264pay config-interval=1 pt=96 ! udpsink host={SERVER_IP} port={SERVER_PORT}"
 )
 
