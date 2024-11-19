@@ -2,7 +2,7 @@ import gi
 import cv2
 import socket
 import numpy as np
-
+import time
 # GStreamer 초기화
 gi.require_version('Gst', '1.0')
 from gi.repository import Gst
@@ -25,8 +25,12 @@ pipeline.set_state(Gst.State.PLAYING)
 try:
     print("QGC로 비디오 스트리밍을 시작합니다. 종료하려면 Ctrl+C를 누르세요.")
     while True:
+        success, position = pipeline.query_position(Gst.Format.TIME)
+        if success:
+            print(f"현재 위치: {position / Gst.SECOND} 초")
+            time.sleep(1)  # 1초 간격으로 확인
         pass  # 파이프라인이 계속 실행되도록 유지
-
+    
 except KeyboardInterrupt:
     print("종료 중...")
 
